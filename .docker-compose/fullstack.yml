@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  flask:
+    container_name: bowling-backend
+    image: "bowling-backend:latest"
+    depends_on:
+      - db
+    networks:
+      - docker
+    volumes:
+      - ../backend:/code
+    working_dir: /code
+    entrypoint: bash start.sh
+    ports:
+      - 5000:5000
+
+  db:
+    container_name: bowling-db
+    image: "mongo:3-stretch"
+    networks:
+      - docker
+    ports:
+      - "27017:27017"
+
+networks:
+  docker:
