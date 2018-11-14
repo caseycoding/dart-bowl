@@ -1,11 +1,13 @@
 version: '3'
 services:
 
-  flask:
+  backend:
     container_name: bowling-backend
     image: "bowling-backend:latest"
     depends_on:
       - db
+    environment:
+      - FLASK_ENV=development
     networks:
       - docker
     volumes:
@@ -20,8 +22,6 @@ services:
     image: "mongo:3-stretch"
     networks:
       - docker
-    ports:
-      - "27017:27017"
 
 networks:
   docker:
