@@ -8,6 +8,9 @@ DOMAIN = {
     "games": {
         "schema": schemas.game_schema
     },
+    "rolls": {
+        "schema": schemas.roll_schema
+    }
 }
 
 # database

@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   backend:
     container_name: bowling-backend
     image: "bowling-backend:latest"
@@ -13,15 +12,13 @@ services:
     volumes:
       - ../backend:/code
     working_dir: /code
-    entrypoint: bash start.sh
+    entrypoint: ${BACKEND_ENTRYPOINT}
     ports:
       - 5000:5000
-
   db:
     container_name: bowling-db
     image: "mongo:3-stretch"
     networks:
       - docker
-
 networks:
   docker:

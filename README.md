@@ -10,3 +10,8 @@ http://bowling.about.com/od/rulesofthegame/a/bowlingscoring.htm
 
 Build local backend container
 `make build-backend-docker-container`
+
+Other notes:
+* Wanted a sweet docker-compose setup so we wouldn't have to deal with dependency issues.
+* Tabnine is cool. This was my first time using it and it was interesting to use.
+* Moved from flask to eve to target the `usage of a REST framework` mention and to learn more about eve.
