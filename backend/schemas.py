@@ -8,7 +8,33 @@ game_schema = {
     "players": {
         "type": "list",
         "required": True,
-        
+        "schema": {
+            "type": "objectid",
+        }
+    },
+    "scores": {
+        "type": "dict",
+        "required": False,
+        "keyschema": {
+            "type": "objectid",
+        },
+        "valueschema": {
+            "type": "dict",
+            "schema": {
+                "total_score": {
+                    "type": "number",
+                },
+                "player_id": {
+                    "type": "objectid",
+                },
+                "dispay_name": {
+                    "type": "string",
+                }, 
+                "frames": {
+                    "type": "list",
+                }
+            }
+        }
     }
 }
 
@@ -41,11 +67,7 @@ roll_schema = {
         },
     },
     "pins": {
-        "type": "number",
+        "type": "string", # string to handle strikes
         "required": True,
-    },
-    "frame": {
-        "type": "number",
-        "required": True,
-    },
+    }
 }

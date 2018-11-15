@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 watchmedo auto-restart \
- --patterns="*.py;" \
+ --patterns="*.py" \
  --ignore-directories \
- --ignore-patterns="tests/" \
  --recursive \
- -- python app.py 
+ -- python app.py
