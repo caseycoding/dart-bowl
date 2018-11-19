@@ -5,17 +5,17 @@ dart-bowl
 ## Usage
 Dependencies: make and docker.
 
-To build local backend container:
+To build local backend container:  
 `make build-backend-docker-container`
 
-To run the stack:
+To run the stack:  
 `make up-fullstack`
 
 This will launch the app at localhost:5000.
 
-To run tests:
-Bring the fullstack up with `make up-fullstack`.
-Mount into the python container with `make mount-into-fullstack`
+To run tests:  
+Bring the fullstack up with `make up-fullstack`.  
+Mount into the python container with `make mount-into-fullstack`.  
 Run `make test-fullstack`
 
 Postman collection with the basic operations: https://www.getpostman.com/collections/8017e9461cc7516dc60b
