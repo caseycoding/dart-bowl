@@ -28,12 +28,19 @@ def update_frames(frames, pins_knocked_down):
     if len(frames) == 10 and len(frames[-1]) > 2:
         abort(400, "Last frame cannot have more than three rolls.")
 
+    if pins_knocked_down > 10:
+        abort(400, "Invalid pin value.")
+
     # deep copy isn't really necessary here but helps in testing
     new_frames = copy.deepcopy(frames)
     # check if previous frame is full or strike.  last frame can have more than two rolls
     if (len(new_frames[-1]) == 2 or new_frames[-1][0] == 10) and len(frames) != 10:
         new_frames.append([pins_knocked_down])
     else:
+        # check to see if pin number is valid
+        if new_frames[-1][0] + pins_knocked_down > 10:
+            abort(400, "Invalid pin value.")
+
         new_frames[-1].append(pins_knocked_down)
     return new_frames
 

@@ -1,5 +1,7 @@
 import schemas
 
+# effectively creates the routes available
+# also sets the chalice schema for the route
 DOMAIN = {
     "players": {"schema": schemas.player_schema},
     "games": {"schema": schemas.create_game_schema},

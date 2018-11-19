@@ -1,4 +1,6 @@
-dart-bowl-api
+dart-bowl
+
+![bowling gif](https://thumbs.gfycat.com/ThickLinearGoldenretriever-size_restricted.gif)
 
 CHALLENGE:
 The challenge is to implement a bowling scoring REST API (and optional front end). Basically, something that takes in pins knocked down for players and keeps track of them and calculates and provides their scores. If you were in a bowling alley and looked at the display, it would be the service that powered the numbers behind the display.
@@ -10,7 +12,7 @@ http://bowling.about.com/od/rulesofthegame/a/bowlingscoring.htm
 
 
 ## Usage
-Dependencies - hopefully just docker.
+Dependencies: make and docker.
 
 To build local backend container:
 `make build-backend-docker-container`
@@ -25,6 +27,7 @@ Bring the fullstack up with `make up-fullstack`.
 Mount into the python container with `make mount-into-fullstack`
 Run `make test-fullstack`
 
+Postman collection with the basic operations: https://www.getpostman.com/collections/8017e9461cc7516dc60b
 
 Other notes:
 * Wanted a sweet docker-compose setup so we wouldn't have to deal with dependency issues.
@@ -35,9 +38,8 @@ Other notes:
 * Don't really need player objects
 
 Known issues:
-* Knocking down more than 10 pins in a frame doesn't throw an error
 * Errors in testing should return the api error response, also testing should be easier
 * Testing has both unit and integration test which I have mixed feelings about.  (More bang for your buck with integration tests, but I might move their use to a determined stage in the development pipeline or use mocks underneath)
 * There is some db mutation remaining after the tests run
 * Running the tests shouldn't require the stack to be previously mounted and cause the server to restart.
-* Worthwhile to move the game logic out of app.py
+* I'd be worthwhile to move the game logic out of app.py
