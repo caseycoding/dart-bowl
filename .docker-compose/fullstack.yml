@@ -7,6 +7,7 @@ services:
       - db
     environment:
       - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1 # helps with python logging, remember and forget this often
     networks:
       - docker
     volumes:

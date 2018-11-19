@@ -19,11 +19,14 @@ mount-backend-docker-container:
 mount-fullstack:
 	BACKEND_ENTRYPOINT='bash' docker-compose -f .docker-compose/fullstack.yml up
 
+# can be used to mount into a running backend container
 mount-into-fullstack:
 	docker exec -it bowling-backend /bin/bash
 
+# bring it all up
 up-fullstack:
 	BACKEND_ENTRYPOINT='bash start.sh' docker-compose -f .docker-compose/fullstack.yml up
 
+# bring it all down
 down-fullstack:
 	docker-compose -f .docker-compose/fullstack.yml down
