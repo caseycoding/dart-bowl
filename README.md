@@ -8,26 +8,36 @@ For this, you don't have to implement a ton of bells and whistles. Instead, we'r
 Here's some information on bowling scoring for reference:  
 http://bowling.about.com/od/rulesofthegame/a/bowlingscoring.htm
 
-Build local backend container
+
+## Usage
+Dependencies - hopefully just docker.
+
+To build local backend container:
 `make build-backend-docker-container`
+
+To run the stack:
+`make up-fullstack`
+
+This will launch the app at localhost:5000.
+
+To run tests:
+Bring the fullstack up with `make up-fullstack`.
+Mount into the python container with `make mount-into-fullstack`
+Run `make test-fullstack`
+
 
 Other notes:
 * Wanted a sweet docker-compose setup so we wouldn't have to deal with dependency issues.
 * Tabnine is cool. This was my first time using it and it was interesting to use.
 * Moved from flask to eve to target the `usage of a REST framework` mention and to learn more about eve.
+* 'DB is cheap' so there is some duplicated data between rolls and a game object
+* Gutter balls are posted as 0's, strikes as 10
+* Don't really need player objects
 
-
-Schema notes:
-game schema:
-{
-  lane: 12,
-  players: [],
-  scores: {
-    playerid: {
-      total_score:
-      playerid
-      displayname
-      frames: [['','']]
-    }
-  }
-}
+Known issues:
+* Knocking down more than 10 pins in a frame doesn't throw an error
+* Errors in testing should return the api error response, also testing should be easier
+* Testing has both unit and integration test which I have mixed feelings about.  (More bang for your buck with integration tests, but I might move their use to a determined stage in the development pipeline or use mocks underneath)
+* There is some db mutation remaining after the tests run
+* Running the tests shouldn't require the stack to be previously mounted and cause the server to restart.
+* Worthwhile to move the game logic out of app.py
