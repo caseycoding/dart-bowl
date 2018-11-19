@@ -8,30 +8,60 @@ headers = {"Content-Type": "application/json"}
 
 class TestRolls(object):
     def test_roll_player1(self, player_fixture, game_fixture):
-        new_roll = {
-          "game": game_fixture[0], 
-          "player": player_fixture[0][0],
-          "pins": "5",
-        }
-        roll_res = requests.post(f"{BASE_URL}/rolls",
-                          data=json.dumps(new_roll), headers=headers)
+        test_roll = {"player_id": player_fixture[0][0], "pins_knocked_down": 5}
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
         assert roll_res.status_code == 201
-        data = roll_res.json()
+        assert roll_res.json()["score"] == None
 
-        assert data["frame"] == 0
-        assert data["total_score"] == 5
+        test_roll["pins_knocked_down"] = 5
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == None
+
+        test_roll["pins_knocked_down"] = 5
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == 15
 
     def test_roll_player2(self, player_fixture, game_fixture):
-        # tests that a single strike doesn't return a score because the next two rolls haven't been completed
-        new_roll = {
-            "game": game_fixture[0],
-            "player": player_fixture[1][0],
-            "pins": "X",
-        }
-        roll_res = requests.post(f"{BASE_URL}/rolls",
-                                 data=json.dumps(new_roll), headers=headers)
+        test_roll = {"player_id": player_fixture[1][0], "pins_knocked_down": 10}
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
         assert roll_res.status_code == 201
-        data = roll_res.json()
+        assert roll_res.json()["score"] == None
 
-        assert data["frame"] == 0
-        assert data["total_score"] == None
+        test_roll["pins_knocked_down"] = 2
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == None
+
+        test_roll["pins_knocked_down"] = 3
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == 20
+
+        test_roll["pins_knocked_down"] = 9
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == 20
+
+        test_roll["pins_knocked_down"] = 1
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == 20
+
+    def test_roll_player3(self, player_fixture, game_fixture):
+        test_roll = {"player_id": player_fixture[2][0], "pins_knocked_down": 2}
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == None
+
+        test_roll["pins_knocked_down"] = 2
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        print(roll_res.text)
+        assert roll_res.status_code == 201
+        assert roll_res.json()["score"] == 4
+
+    def test_roll_player1_no_score(self, player_fixture, game_fixture):
+        test_roll = {"player_id": player_fixture[0][0]}
+        roll_res = requests.post(f"{BASE_URL}/games/{game_fixture[0]}/rolls", data=json.dumps(test_roll), headers=headers)
+        assert roll_res.status_code == 422

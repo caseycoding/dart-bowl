@@ -26,14 +26,11 @@ def player_fixture():
 def game_fixture(player_fixture):
     players = [_id for _id, _etag in player_fixture]
     new_game = {"lane": 15, "players": players}
-    game_res = requests.post(f"{BASE_URL}/games", data=json.dumps(new_game), headers={"Content-Type":"application/json"})
-    
+    game_res = requests.post(f"{BASE_URL}/games", data=json.dumps(new_game), headers={"Content-Type": "application/json"})
+
     game_data = (game_res.json()["_id"], game_res.json()["_etag"])
     yield game_data
 
     # cleanup
-    game_del = requests.delete(
-            f"{BASE_URL}/games/{game_data[0]}", headers={"If-Match": game_data[1]})
+    game_del = requests.delete(f"{BASE_URL}/games/{game_data[0]}", headers={"If-Match": game_data[1]})
     assert game_del.status_code == 204
-
-    
